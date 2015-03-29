@@ -1,0 +1,19 @@
+{
+  "name": "usabilitydynamics/lib-wp-post-activity",
+  "description": "Allows to manage custom activity (logs) for post",
+  "homepage": "https://github.com/UsabilityDynamics/lib-wp-post-activity",
+  "keywords": [
+    "wordpress",
+    "activity",
+    "logs",
+    "library"
+  ],
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.3"
+  },
+  "autoload": {
+    "classmap": [ "lib/classes" ]
+  }
+}
