@@ -1,7 +1,79 @@
 lib-wp-post-activity
 ================
 
-Wordpress Post Activity library for managing custom activity ( history logs, etc ) for specific posts
+## Description
+Wordpress Post Activity library for managing custom activity ( notes, events ) for specific posts
+
+##Examples
+
+#### UI Initialization
+```php
+
+/**
+ * Maybe inititialize Activity UI
+ * Note: it should be called on or before 'init' action hook.
+ */
+\UsabilityDynamics\PA\Post_Activity::init();
+
+/**
+ * Add Activity meta box for specific 'post' and 'page' post types.
+ *
+ */
+add_filter( 'wp_post_activity_posts', function( $posts ) {
+  // Add 'Activity' Meta Box on Edit Post page
+  $posts[] = 'post';
+  // Add 'Activity' Meta Box on Edit Page page
+  $posts[] = 'page';
+  return $posts;
+} );
+
+```
+
+#### API
+```php
+
+/**
+ * Add Activity record.
+ *
+ * Note: there are two statuses: Event (event) and Note (note)
+ * Record will be set as 'event' if user_id is not passed.
+ * If user_id is passed, status will be set as 'note'
+ *
+ * @return bool|WP_Error
+ */
+UsabilityDynamics\PA\API::add( array(
+  // Required. Post ID which activity Event belongs to
+  'post_id' => false,
+  // Required. Content of Event. Supports HTML.
+  'content' => '',  
+  // Optional. Author ( owner ) of event. 
+  'user_id' => false,
+) );
+
+/**
+ * Get the list of all Activity records for passed post_id_
+ *
+ * Uses: get_comments()
+ * See: https://codex.wordpress.org/Function_Reference/get_comments
+ *
+ * @param int $args Required
+ * @param array $args Optional. Equal to get_comments() arguments
+ * @return array The list of objects.
+ */
+UsabilityDynamics\PA\API::get( $post_id, $args );
+
+/**
+ * Delete Activity record.
+ *
+ * Note: comment ID or comment object can be passed
+ * Note: user must be owner of record or be administrator.
+ *
+ * @param integer|object $comment
+ * @return bool|WP_Error
+ */
+UsabilityDynamics\PA\API::delete( $comment );
+
+```
 
 ## License
 

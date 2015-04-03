@@ -53,13 +53,13 @@ namespace UsabilityDynamics\PA {
       private function __wakeup() {}
 
       /**
-       * Returns the *Singleton* instance of this class.
+       * Initializes Activity UI.
        *
        * @staticvar Singleton $instance The *Singleton* instances of this class.
        *
        * @return Singleton The *Singleton* instance.
        */
-      public static function get_instance() {
+      public static function init() {
         static $instance = null;
         if (null === $instance) {
           $instance = new static();
