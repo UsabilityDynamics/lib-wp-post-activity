@@ -53,7 +53,7 @@ namespace UsabilityDynamics\PA {
       private function __wakeup() {}
 
       /**
-       * Initializes Activity UI.
+       * Maybe Initialize plugin
        *
        * @staticvar Singleton $instance The *Singleton* instances of this class.
        *

@@ -15,7 +15,7 @@ namespace UsabilityDynamics\PA {
        * Add Activity's Event
        *
        */
-      public function add( $args ) {
+      static public function add( $args ) {
 
         $args = wp_parse_args( $args, array(
           'post_id' => false,
@@ -97,7 +97,7 @@ namespace UsabilityDynamics\PA {
        *
        * @return array
        */
-      public function get( $post_id, $args = array() ) {
+      static public function get( $post_id, $args = array() ) {
 
         $args = wp_parse_args( $args, array(
           'type__in' => array( 'post_activity' ),
@@ -114,7 +114,7 @@ namespace UsabilityDynamics\PA {
        * Delete Activity record
        *
        */
-      public function delete( $comment ) {
+      static public function delete( $comment ) {
 
         if( !is_object( $comment ) ) {
           $comment = get_comment( $comment );
