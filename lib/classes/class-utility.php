@@ -15,7 +15,7 @@ namespace UsabilityDynamics\PA {
        * Renders template part.
        *
        */
-      public function get_template($name, $data = array(), $output = false) {
+      static public function get_template($name, $data = array(), $output = false) {
         if (is_array($data)) {
           extract($data);
         }

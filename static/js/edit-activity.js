@@ -26,11 +26,18 @@ $( document).ready( function() {
 	 */
 	$('.activity-form a.submit-note', container).click(function(){
 
+		/* Take care about custom meta data. */
+		var extra = {};
+		$( 'input, select', '#wp_post_activity .custom_meta').each( function(i,e){
+			extra[$(e).attr('name')] = $(e).val();
+		} );
+
 		var data = {
 			'action': 'pa_add_note',
 			'user_id': $('#pa_user_id').val(),
 			'post_id': $('#pa_post_id').val(),
-			'content': $('#pa_content').val()
+			'content': $('#pa_content').val(),
+			'extra': extra
 		};
 
 		$.ajax({
@@ -50,6 +57,7 @@ $( document).ready( function() {
 					$('#pa_content').val('');
 					$('.activity-form', container).hide();
 					$('.activity-list', container).prepend( '<li class="activity-item">'+ d.data.html + '</li>');
+					$(document).trigger('pa_added_note',[data,d]);
 				}
 			}
 		});

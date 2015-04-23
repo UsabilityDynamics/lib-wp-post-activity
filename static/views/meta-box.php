@@ -34,8 +34,27 @@ $comments = \UsabilityDynamics\PA\API::get( $post->ID );
     </div>
     <div class="actions">
       <ul>
-        <li><a href="#submit" class="submit-note button button-primary button-large"><?php _e( 'Submit' ); ?></a></li>
-        <li><a href="#cancel" class="cancel button button-primary button-large"><?php _e( 'Cancel' ); ?></a></li>
+        <li class="submit"><a href="#submit" class="submit-note button button-primary button-large"><?php _e( 'Submit' ); ?></a></li>
+        <li class="custom_meta">
+          <?php foreach( $fields as $key => $field ) : ?>
+            <label class="meta-<?php $key ?>">
+              <span><?php echo $field['name']; ?><span class="delimiter">:</span></span>
+              <?php switch( $field[ 'type' ] ) {
+                case 'text':
+                  ?><input type="text" value="" name="<?php echo $key; ?>" /><?php
+                  break;
+                case 'select':
+                  ?><select name="<?php echo $key; ?>">
+                    <?php if( !empty( $field['options'] ) && is_array( $field['options'] ) ) foreach( $field['options'] as $i => $v ) : ?>
+                      <option value="<?php echo $i ?>"><?php echo $v ?></option>
+                    <?php endforeach; ?>
+                  </select><?php
+                  break;
+              } ?>
+            </label>
+          <?php endforeach; ?>
+        </li>
+        <li class="cancel"><a href="#cancel" class="cancel button button-primary button-large"><?php _e( 'Cancel' ); ?></a></li>
       </ul>
     </div>
   </div>

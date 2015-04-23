@@ -161,6 +161,18 @@ namespace UsabilityDynamics\PA {
           throw new \Exception( 'Something went wrong on trying to add note.' );
         }
 
+        // Custom meta
+        if(!empty( $extra ) && is_array($extra)){
+          foreach( $extra as $k => $v ) {
+            if( !add_comment_meta( $id, $k, $v, true ) ) {
+              throw new \Exception( 'Activity has been saved, but there was a failure on trying to save custom meta data.' );
+            }
+          }
+        }
+
+        // Can be used for custom logic.
+        do_action( 'pa::after_add_note', $id, $args );
+
         $comment = get_comment( $id );
 
         return array(

@@ -10,22 +10,41 @@ Wordpress Post Activity library for managing custom activity ( notes, events ) f
 ```php
 
 /**
- * Maybe inititialize Activity UI
+ * Returns Activity Singleton object
  * Note: it should be called on or before 'init' action hook.
+ * to add ajax handlers.
  */
-\UsabilityDynamics\PA\Post_Activity::init();
+$activity = \UsabilityDynamics\PA\Post_Activity::get_instance();
 
 /**
- * Add Activity meta box for specific 'post' and 'page' post types.
+ * EXAMPLE 1:
+ *
+ * Add Activity meta box for specific screen ( e.g. 'post' ).
  *
  */
-add_filter( 'wp_post_activity_posts', function( $posts ) {
-  // Add 'Activity' Meta Box on Edit Post page
-  $posts[] = 'post';
-  // Add 'Activity' Meta Box on Edit Page page
-  $posts[] = 'page';
-  return $posts;
-} );
+$activity->add_screen( 'post' );
+
+
+/**
+ * EXAMPLE 2:
+ *
+ * Add Activity meta box for specific screen ( e.g. 'page' ).
+ * 
+ * Second argument (optional) is the list of additional fields (meta) which
+ * will be added on Activity form.
+ *
+ * The additional fields data is being stored in commentmeta table
+ */
+\UsabilityDynamics\PA\Post_Activity::get_instance()->add_screen( 'page', array(
+  'meta_key' => array(
+    'name' => 'Name of field',
+    'type' => 'select', // Available types: 'select', 'text'
+    'options' => array(
+      'value1' => 'label1',
+      'value2' => 'label2'
+    )
+  )
+) );
 
 ```
 

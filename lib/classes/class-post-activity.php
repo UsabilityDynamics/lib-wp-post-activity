@@ -18,6 +18,12 @@ namespace UsabilityDynamics\PA {
     class Post_Activity {
 
       /**
+       * The list of screens where Activity meta box is being rendered.
+       * @var array
+       */
+      var $screens = array();
+
+      /**
        * Constructor
        *
        * Protected constructor to prevent creating a new instance of the
@@ -29,8 +35,6 @@ namespace UsabilityDynamics\PA {
 
         /** Init AJAX handler */
         new Ajax();
-
-        add_action( 'init', array( $this, 'register_post_type' ) );
 
         add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 
@@ -53,13 +57,14 @@ namespace UsabilityDynamics\PA {
       private function __wakeup() {}
 
       /**
+       * Returns Singleton object
        * Maybe Initialize plugin
        *
        * @staticvar Singleton $instance The *Singleton* instances of this class.
        *
        * @return Singleton The *Singleton* instance.
        */
-      public static function init() {
+      public static function get_instance() {
         static $instance = null;
         if (null === $instance) {
           $instance = new static();
@@ -71,9 +76,10 @@ namespace UsabilityDynamics\PA {
        *
        */
       public function add_meta_boxes() {
-        $screens = apply_filters( 'wp_post_activity_posts', array() );
-        foreach ( $screens as $screen ) {
-          add_meta_box( 'wp_post_activity',  __( 'Activity' ),  array( $this, 'render_meta_box' ),  $screen, 'normal' );
+        if( !empty( $this->screens ) && is_array( $this->screens ) ) {
+          foreach ( $this->screens as $screen => $args ) {
+            add_meta_box( 'wp_post_activity',  __( 'Activity' ),  array( $this, 'render_meta_box' ),  $screen, 'normal' );
+          }
         }
       }
 
@@ -81,7 +87,33 @@ namespace UsabilityDynamics\PA {
        *
        */
       public function render_meta_box() {
-        Utility::get_template( 'meta-box', array(), true );
+        $screen = get_current_screen();
+        $fields = !empty( $this->screens[ $screen->id ] ) ? $this->screens[ $screen->id ] : array();
+        Utility::get_template( 'meta-box', array( 'fields' => $fields ), true );
+      }
+
+      /**
+       *
+       */
+      public function add_screen( $screen, $fields = array() ) {
+        if( did_action( 'add_meta_boxes' ) ) {
+          _doing_it_wrong( __FUNCTION__, __( 'method must be called before \'add_meta_boxes\' action.' ), '1.0' );
+        }
+        if( !is_array( $this->screens ) ) {
+          $this->screens = array();
+        }
+        if( !is_array( $fields ) ) {
+          $fields = array();
+        }
+
+        foreach( $fields as $k => $v ) {
+          $fields[$k] = wp_parse_args( $v, array(
+            'name' => 'No Name',
+            'type' => 'text',
+            'options' => array(),
+          ) );
+        }
+        $this->screens[$screen] = $fields;
       }
 
     }

@@ -14,8 +14,33 @@
   padding-right: 12px;
 }
 
-#wp_post_activity #wp_pa_box .activity-form .actions .submit-note {
+#wp_post_activity #wp_pa_box .activity-form .actions .submit {
   float:right;
+  padding: 0 0 0 12px;
+}
+
+#wp_post_activity #wp_pa_box .activity-form .actions .custom_meta {
+  float:right;
+}
+
+#wp_post_activity #wp_pa_box .activity-form .actions .cancel {
+  float:left;
+}
+
+#wp_post_activity #wp_pa_box .activity-form .actions {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+#wp_post_activity #wp_pa_box .activity-form .actions:after {
+  content: '&nbsp;';
+  visibility: hidden;
+  clear: both;
+  width:1px;
+  height: 1px;
+  line-height: 1px;
+  margin: -1px 0 0 0;
+  padding:0;
 }
 
 #wp_post_activity #wp_pa_box .activity-list {
