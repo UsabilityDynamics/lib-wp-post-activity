@@ -1,7 +1,7 @@
 {
-  "name": "usabilitydynamics/lib-wp-post-activity",
+  "name": "udx/lib-wp-post-activity",
   "description": "Allows to manage custom activity (logs) for post",
-  "homepage": "https://github.com/UsabilityDynamics/lib-wp-post-activity",
+  "homepage": "https://github.com/udx/lib-wp-post-activity",
   "keywords": [
     "wordpress",
     "activity",
